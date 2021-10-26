@@ -3,25 +3,29 @@ package com.bridgelabz;
 import java.util.HashMap;
 import java.util.Scanner;
 
-public class AddressBook {
+public class AddressBook{
     static String name;
+    static boolean is_Running=false;
 
     public static void main(String[] args){
 
         System.out.println("Welcome to the ADDRESS BOOK");
         HashMap<String,ContactInfo> addressBook = new HashMap<>();
 
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter 1 to create a new contact");
-        int choice = scanner.nextInt();
-        if (choice==1){
-            ContactInfo contact = new ContactInfo();
-            contact.setContactInfo();
-            name = contact.firstName + " " + contact.lastName;
-            addressBook.put(name,contact);
-            addressBook.get(name).displayContactInfo();
+        while (!is_Running) {
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Enter 1 to create a new contact and 2 to exit");
+            int choice = scanner.nextInt();
+            if (choice == 1) {
+                ContactInfo contact = new ContactInfo();
+                contact.setContactInfo();
+                name = contact.firstName + " " + contact.lastName;
+                addressBook.put(name, contact);
+                addressBook.get(name).displayContactInfo();
+            }else if (choice==2){
+                is_Running = true;
+            }
         }
-
     }
 }
 
@@ -67,8 +71,7 @@ class ContactInfo{
         setEmail(sc.nextLine());
     }
     public void displayContactInfo(){
-        System.out.print("First Name: "+firstName+"\n Last Name: "+lastName+"\n Address: "+address+
-                "\n City: "+city+"\n State: "+state+ "\n Zipcode: "+zipcode+"\n PhoneNO: "+phoneNo+"\n Email: "+email);
+        System.out.print(" First Name: "+firstName+"\n Last Name: "+lastName+"\n Address: "+address+
+                "\n City: "+city+"\n State: "+state+ "\n Zipcode: "+zipcode+"\n PhoneNO: "+phoneNo+"\n Email: "+email+"\n");
     }
-
 }
