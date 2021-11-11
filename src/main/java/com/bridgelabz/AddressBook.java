@@ -49,8 +49,8 @@ public class AddressBook {
                 ContactInfo contact = new ContactInfo();
                 contact.setContactInfo();
                 name = contact.firstName.toUpperCase(Locale.ROOT) + " " + contact.lastName.toUpperCase(Locale.ROOT);
-                if (multiAdressBook.get(key).addressBook.keySet().stream().noneMatch(k -> k.equals(name))){                 //JAVA STREAMS is used to check if any duplicate contact already exist in the addressBook
-                    multiAdressBook.get(key).addressBook.put(name, contact);
+                if (multiAdressBook.get(key).addressBook.keySet().stream().noneMatch(k -> k.equals(name))){                 //JAVA STREAMS is used to check if any duplicate
+                    multiAdressBook.get(key).addressBook.put(name, contact);                                                // contact already exist in the addressBook
                     multiAdressBook.get(key).addressBook.get(name).displayContactInfo();
                 }
                 else System.out.println("Contact already exist duplicate not allowed");
