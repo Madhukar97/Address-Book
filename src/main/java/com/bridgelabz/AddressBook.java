@@ -34,11 +34,6 @@ public class AddressBook {
         obj.createContact(multiAddressBook);
         obj.readFromFile();
         obj.readFromCSVFile();
-//        obj.searchContactBasedOnCity(multiAddressBook);
-//        obj.sortContactsByPersonName(multiAddressBook);
-//        obj.sortContactsByCity(multiAddressBook);
-//        obj.sortContactsByState(multiAddressBook);
-//        obj.sortContactsByZip(multiAddressBook);
     }
 
     public void createContact(HashMap<String, AddressBook> multiAddressBook) throws IOException {
@@ -67,7 +62,17 @@ public class AddressBook {
                 default -> null;
             };
             if (option == 4) break;
-            System.out.println(" Enter 1 to create a new contact \n 2 to exit \n 3 to edit existing contact \n 4 to delete an existing contact");
+            System.out.println("""
+                     Enter:
+                    1.Create a new contact
+                    2.Exit
+                    3.Edit existing contact
+                    4.Delete an existing contact
+                    5.SearchContactBasedOnCity
+                    6.SortContactsByPersonName
+                    7.SortContactsByCity
+                    8.SortContactsByState
+                    9.SortContactsByZip""");
             int choice = scanner.nextInt();
             if (choice == 1) {
                 ContactInfo contact = new ContactInfo();
@@ -93,6 +98,16 @@ public class AddressBook {
                 multiAddressBook.get(key).editContact();
             } else if (choice == 4) {
                 multiAddressBook.get(key).deleteContact();
+            } else if (choice == 5) {
+                searchContactBasedOnCity(multiAddressBook);
+            } else if (choice == 6) {
+                sortContactsByPersonName(multiAddressBook);
+            } else if (choice == 7) {
+                sortContactsByCity(multiAddressBook);
+            } else if (choice == 8) {
+                sortContactsByState(multiAddressBook);
+            } else if (choice == 9) {
+                sortContactsByZip(multiAddressBook);
             }
         }
         bw1.close();
@@ -110,7 +125,7 @@ public class AddressBook {
      * @throws CsvValidationException
      */
     public void readFromCSVFile() throws IOException, CsvValidationException {
-        System.out.println("\nReading from CSV files:  ");
+        System.out.println("\nReading from CSV files:  \n");
         String[] contactInfo;
         CSVReader csvR1 = new CSVReader(new FileReader("G:\\programming\\JAVA LFP batch\\AddressBook\\AddressBook1.csv"));
         while ((contactInfo = csvR1.readNext()) != null) {
@@ -143,6 +158,7 @@ public class AddressBook {
      */
     public void readFromFile() throws IOException {
         String contact;
+        System.out.println("\nReading from File IO method: \n");
         System.out.println("List of Contacts in AddressBook 1 : ");
         System.out.println("firstName, lastName, address, city, state, zipcode, phoneNo, email");
         BufferedReader br1 = new BufferedReader(new FileReader("G:\\programming\\JAVA LFP batch\\AddressBook\\AddressBook1.txt"));
