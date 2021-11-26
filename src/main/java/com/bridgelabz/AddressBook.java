@@ -5,9 +5,6 @@ import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvValidationException;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -46,7 +43,7 @@ public class AddressBook {
         CSVWriter csv2 = new CSVWriter(new FileWriter("G:\\programming\\JAVA LFP batch\\AddressBook\\AddressBook2.csv"));
         CSVWriter csv3 = new CSVWriter(new FileWriter("G:\\programming\\JAVA LFP batch\\AddressBook\\AddressBook3.csv"));
 
-        String[] header = { "FirstName", "LastName", "Address", "City", "State", "Zipcode", "PhoneNo", "Email" };
+        String[] header = {"FirstName", "LastName", "Address", "City", "State", "Zipcode", "PhoneNo", "Email"};
         csv1.writeNext(header);
         csv2.writeNext(header);
         csv3.writeNext(header);
@@ -86,9 +83,18 @@ public class AddressBook {
                     String csvOutputString = multiAddressBook.get(key).addressBook.get(name).showContactCSV();
                     String[] csvData = csvOutputString.split(",");
                     switch (option) {
-                        case 1 -> {bw1.write(outputData);csv1.writeNext(csvData);}
-                        case 2 -> {bw2.write(outputData);csv2.writeNext(csvData);}
-                        case 3 -> {bw3.write(outputData);csv3.writeNext(csvData);}
+                        case 1 -> {
+                            bw1.write(outputData);
+                            csv1.writeNext(csvData);
+                        }
+                        case 2 -> {
+                            bw2.write(outputData);
+                            csv2.writeNext(csvData);
+                        }
+                        case 3 -> {
+                            bw3.write(outputData);
+                            csv3.writeNext(csvData);
+                        }
                     }
 
                 } else System.out.println("Contact already exist duplicate not allowed");
@@ -121,6 +127,7 @@ public class AddressBook {
 
     /**
      * Method for reading data from csv file
+     *
      * @throws IOException
      * @throws CsvValidationException
      */
@@ -154,6 +161,7 @@ public class AddressBook {
 
     /**
      * Method for reading contacts stored in addressBook .txt File
+     *
      * @throws IOException
      */
     public void readFromFile() throws IOException {
@@ -162,19 +170,19 @@ public class AddressBook {
         System.out.println("List of Contacts in AddressBook 1 : ");
         System.out.println("firstName, lastName, address, city, state, zipcode, phoneNo, email");
         BufferedReader br1 = new BufferedReader(new FileReader("G:\\programming\\JAVA LFP batch\\AddressBook\\AddressBook1.txt"));
-        while ((contact = br1.readLine()) != null){
+        while ((contact = br1.readLine()) != null) {
             System.out.println(contact);
         }
         System.out.println("\nList of Contacts in AddressBook 2 : ");
         System.out.println("firstName, lastName, address, city, state, zipcode, phoneNo, email");
         BufferedReader br2 = new BufferedReader(new FileReader("G:\\programming\\JAVA LFP batch\\AddressBook\\AddressBook2.txt"));
-        while ((contact = br2.readLine()) != null){
+        while ((contact = br2.readLine()) != null) {
             System.out.println(contact);
         }
         System.out.println("\nList of Contacts in AddressBook 3 : ");
         System.out.println("firstName, lastName, address, city, state, zipcode, phoneNo, email");
         BufferedReader br3 = new BufferedReader(new FileReader("G:\\programming\\JAVA LFP batch\\AddressBook\\AddressBook3.txt"));
-        while ((contact = br3.readLine()) != null){
+        while ((contact = br3.readLine()) != null) {
             System.out.println(contact);
         }
     }
@@ -302,7 +310,7 @@ public class AddressBook {
             List<ContactInfo> sortedContacts = addressBookMapEntry.getValue().addressBook.values().stream().sorted(Comparator.comparing(contactInfo -> contactInfo.city)).collect(Collectors.toList());
             System.out.println("Sorted Contacts By City : ");
             for (ContactInfo currentContact : sortedContacts) {
-                System.out.println("Name: " + currentContact.getFirstName() + " " + currentContact.getLastName() + " City "+ currentContact.getCity());
+                System.out.println("Name: " + currentContact.getFirstName() + " " + currentContact.getLastName() + " City " + currentContact.getCity());
             }
             System.out.println("\n");
 
@@ -320,7 +328,7 @@ public class AddressBook {
             List<ContactInfo> sortedContacts = addressBookMapEntry.getValue().addressBook.values().stream().sorted(Comparator.comparing(contactInfo -> contactInfo.state)).collect(Collectors.toList());
             System.out.println("Sorted Contacts By State : ");
             for (ContactInfo currentContact : sortedContacts) {
-                System.out.println("Name: " + currentContact.getFirstName() + " " + currentContact.getLastName() + " State "+ currentContact.getState());
+                System.out.println("Name: " + currentContact.getFirstName() + " " + currentContact.getLastName() + " State " + currentContact.getState());
             }
             System.out.println("\n");
 
@@ -338,7 +346,7 @@ public class AddressBook {
             List<ContactInfo> sortedContacts = addressBookMapEntry.getValue().addressBook.values().stream().sorted(Comparator.comparing(contactInfo -> contactInfo.zipcode)).collect(Collectors.toList());
             System.out.println("Sorted Contacts By Zip : ");
             for (ContactInfo currentContact : sortedContacts) {
-                System.out.println("Name: " + currentContact.getFirstName() + " " + currentContact.getLastName() + " Zip "+ currentContact.getZipcode());
+                System.out.println("Name: " + currentContact.getFirstName() + " " + currentContact.getLastName() + " Zip " + currentContact.getZipcode());
             }
             System.out.println("\n");
         }
