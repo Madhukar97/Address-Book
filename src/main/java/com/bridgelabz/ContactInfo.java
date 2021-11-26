@@ -100,7 +100,7 @@ class ContactInfo {
     }
 
     public String showContact() {
-        return " First Name: " + firstName + "\n Last Name: " + lastName + "\n Address: " + address +
-                "\n City: " + city + "\n State: " + state + "\n Zipcode: " + zipcode + "\n PhoneNO: " + phoneNo + "\n Email: " + email + "\n";
+        return  firstName + "," + lastName + "," + address +
+                "," + city + "," + state + "," + zipcode + "," + phoneNo + "," + email + "\n";
     }
 }
