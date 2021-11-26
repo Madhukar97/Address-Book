@@ -104,6 +104,11 @@ public class AddressBook {
         csv3.close();
     }
 
+    /**
+     * Method for reading data from csv file
+     * @throws IOException
+     * @throws CsvValidationException
+     */
     public void readFromCSVFile() throws IOException, CsvValidationException {
         System.out.println("\nReading from CSV files:  ");
         String[] contactInfo;
