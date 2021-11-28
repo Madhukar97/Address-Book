@@ -1,2 +1,2 @@
-mad,t,asdasd,vizag,ap,530013,9364520084,madhukar@gmail.com
-saran,y,adqwdq2er4,vizag,ap,532055,9610556100,saran@gmail.com
+madhukar,tatiraju,someAddress,vizag,ap,530050,9164506510,madhukar@gmail.com
+saran,yellanki,someAddress,vizag,ap,540514,96156046560,saran@gmail.com

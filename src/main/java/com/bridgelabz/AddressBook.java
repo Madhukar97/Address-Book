@@ -1,8 +1,15 @@
 package com.bridgelabz;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.JsonIOException;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvValidationException;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import java.io.*;
 import java.util.*;
@@ -15,7 +22,7 @@ public class AddressBook {
     public ArrayList<ContactInfo> listOfContacts = new ArrayList<>();
 
     //Driver code
-    public static void main(String[] args) throws IOException, CsvValidationException {
+    public static void main(String[] args) throws IOException, CsvValidationException, ParseException {
         HashMap<String, AddressBook> multiAddressBook = new HashMap<>();
         System.out.println("Welcome to the ADDRESS BOOK");
         AddressBook obj = new AddressBook();
@@ -31,9 +38,10 @@ public class AddressBook {
         obj.createContact(multiAddressBook);
         obj.readFromFile();
         obj.readFromCSVFile();
+        obj.readJSONFile();
     }
 
-    public void createContact(HashMap<String, AddressBook> multiAddressBook) throws IOException {
+    public void createContact(HashMap<String, AddressBook> multiAddressBook) throws IOException, ParseException {
 
         BufferedWriter bw1 = new BufferedWriter(new FileWriter("G:\\programming\\JAVA LFP batch\\AddressBook\\AddressBook1.txt"));
         BufferedWriter bw2 = new BufferedWriter(new FileWriter("G:\\programming\\JAVA LFP batch\\AddressBook\\AddressBook2.txt"));
@@ -47,6 +55,18 @@ public class AddressBook {
         csv1.writeNext(header);
         csv2.writeNext(header);
         csv3.writeNext(header);
+
+        Gson gson = new Gson();
+
+        FileWriter jsonFW1 = new FileWriter("G:\\programming\\JAVA LFP batch\\AddressBook\\AddressBook1.json");
+        FileWriter jsonFW2 = new FileWriter("G:\\programming\\JAVA LFP batch\\AddressBook\\AddressBook2.json");
+        FileWriter jsonFW3 = new FileWriter("G:\\programming\\JAVA LFP batch\\AddressBook\\AddressBook3.json");
+
+        JSONArray outerObj1 = new JSONArray();
+        JSONArray outerObj2 = new JSONArray();
+        JSONArray outerObj3 = new JSONArray();
+
+        JSONObject jsonObject = new JSONObject();
 
         while (!is_Running) {
             Scanner scanner = new Scanner(System.in);
@@ -82,18 +102,25 @@ public class AddressBook {
                     String outputData = multiAddressBook.get(key).addressBook.get(name).showContact();
                     String csvOutputString = multiAddressBook.get(key).addressBook.get(name).showContactCSV();
                     String[] csvData = csvOutputString.split(",");
+                    String json = gson.toJson(contact);
+                    JSONParser parser = new JSONParser();
+                    JSONObject strToJsonObj = (JSONObject) parser.parse(json);
+
                     switch (option) {
                         case 1 -> {
                             bw1.write(outputData);
                             csv1.writeNext(csvData);
+                            outerObj1.add(strToJsonObj);
                         }
                         case 2 -> {
                             bw2.write(outputData);
                             csv2.writeNext(csvData);
+                            outerObj2.add(strToJsonObj);
                         }
                         case 3 -> {
                             bw3.write(outputData);
                             csv3.writeNext(csvData);
+                            outerObj3.add(strToJsonObj);
                         }
                     }
 
@@ -116,6 +143,12 @@ public class AddressBook {
                 sortContactsByZip(multiAddressBook);
             }
         }
+
+        jsonFW1.write(outerObj1.toString());
+        jsonFW2.write(outerObj2.toString());
+        jsonFW3.write(outerObj3.toString());
+
+
         bw1.close();
         bw2.close();
         bw3.close();
@@ -123,6 +156,28 @@ public class AddressBook {
         csv1.close();
         csv2.close();
         csv3.close();
+
+        jsonFW1.close();
+        jsonFW2.close();
+        jsonFW3.close();
+    }
+
+    /**
+     * Method for reading JSON File
+     * @throws IOException
+     * @throws ParseException
+     */
+    public void readJSONFile() throws IOException, ParseException {
+        System.out.println("--------------------------------------------------------------\n Read from JSON File: ");
+        JSONParser parser = new JSONParser();
+        JSONArray jsonArray1 =  (JSONArray) parser.parse(new FileReader("G:\\programming\\JAVA LFP batch\\AddressBook\\AddressBook1.json"));
+        System.out.println(jsonArray1.toJSONString());
+
+        JSONArray jsonArray2 =  (JSONArray) parser.parse(new FileReader("G:\\programming\\JAVA LFP batch\\AddressBook\\AddressBook2.json"));
+        System.out.println(jsonArray2.toJSONString());
+
+        JSONArray jsonArray3 =  (JSONArray) parser.parse(new FileReader("G:\\programming\\JAVA LFP batch\\AddressBook\\AddressBook3.json"));
+        System.out.println(jsonArray3.toJSONString());
     }
 
     /**
@@ -132,7 +187,7 @@ public class AddressBook {
      * @throws CsvValidationException
      */
     public void readFromCSVFile() throws IOException, CsvValidationException {
-        System.out.println("\nReading from CSV files:  \n");
+        System.out.println("--------------------------------------------------------------\nReading from CSV files:  \n");
         String[] contactInfo;
         CSVReader csvR1 = new CSVReader(new FileReader("G:\\programming\\JAVA LFP batch\\AddressBook\\AddressBook1.csv"));
         while ((contactInfo = csvR1.readNext()) != null) {
@@ -166,7 +221,7 @@ public class AddressBook {
      */
     public void readFromFile() throws IOException {
         String contact;
-        System.out.println("\nReading from File IO method: \n");
+        System.out.println("--------------------------------------------------------------\nReading from File IO method: \n");
         System.out.println("List of Contacts in AddressBook 1 : ");
         System.out.println("firstName, lastName, address, city, state, zipcode, phoneNo, email");
         BufferedReader br1 = new BufferedReader(new FileReader("G:\\programming\\JAVA LFP batch\\AddressBook\\AddressBook1.txt"));
@@ -352,4 +407,3 @@ public class AddressBook {
         }
     }
 }
-

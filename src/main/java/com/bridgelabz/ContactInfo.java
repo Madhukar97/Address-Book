@@ -100,12 +100,18 @@ class ContactInfo {
     }
 
     public String showContact() {
-        return  firstName + "," + lastName + "," + address +
+        return firstName + "," + lastName + "," + address +
                 "," + city + "," + state + "," + zipcode + "," + phoneNo + "," + email + "\n";
     }
 
     public String showContactCSV() {
-        return  firstName + "," + lastName + "," + address +
+        return firstName + "," + lastName + "," + address +
                 "," + city + "," + state + "," + zipcode + "," + phoneNo + "," + email;
+    }
+
+    @Override
+    public String toString() {
+        return "\"Contact [First Name " + firstName + ", Last Name = " + lastName + "," +
+                " Address = " + address + ", City = " + city + ", State = " + state + ", ZipCode = " + zipcode + ", Phone = " + phoneNo + ", Email = " + email + "]";
     }
 }
